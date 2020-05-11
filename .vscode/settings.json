@@ -1,0 +1,42 @@
+{
+  "files.associations": {
+    "ostream": "cpp",
+    "iostream": "cpp",
+    "iosfwd": "cpp"
+  },
+  "fileheader.customMade": {
+    "Author": "xiebibing",
+    "Date": "Do not edit",
+    "LastEditTime": "Do not edit",
+    "LastEditors": "Do not edit",
+    "Description": ""
+  },
+  "fileheader.configObj": {
+    "specialOptions": {
+      "Date": "since",
+      "LastEditTime": "lastTime",
+      "LastEditors": "LastAuthor",
+      "Description": "message"
+    }
+  },
+  //gcc + WSL
+  "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+  "C_Cpp.default.intelliSenseMode": "gcc-x64",
+  //use clang
+  // "C_Cpp.autocomplete": "Disabled",//使用clang的话可以使用clang的补全
+  // "C_Cpp.default.intelliSenseMode": "clang-x64",
+  //"C_Cpp.default.compilerPath": "C:/Program Files/LLVM/bin/g++.exe",
+  //use msvc
+  // "C_Cpp.default.intelliSenseMode": "msvc-x64",
+  //cpp
+  "C_Cpp.intelliSenseEngine": "Default", //不设置的话默认使用老引擎
+  "C_Cpp.default.cStandard": "c11",
+  "C_Cpp.default.cppStandard": "c++17",
+  "C_Cpp.default.browse.path": [
+    "${workspaceFolder}",
+  ],
+  "C_Cpp.default.includePath": [
+    "${workspaceFolder}",
+  ],
+  "C_Cpp.errorSquiggles": "Disabled"
+}
