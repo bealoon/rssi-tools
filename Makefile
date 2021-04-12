@@ -1,7 +1,9 @@
 TARGET := sensor
 
-CC := gcc
-CXX := g++
+CC := mipsel-openwrt-linux-gcc
+CXX := mipsel-openwrt-linux-g++
+# CC := gcc
+# CXX := g++
 
 #这里添加其他头文件路径
 INC_DIR = -I./include -I./src2

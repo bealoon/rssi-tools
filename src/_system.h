@@ -2,7 +2,7 @@
 
 #include <pthread.h>
 
-class CSystemProcess
+class CSystem
 {
 private:
     /* data */

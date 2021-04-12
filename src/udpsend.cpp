@@ -13,6 +13,7 @@
 #include <stdlib.h>
 
 #include "udpsend.h"
+#include "buffer.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ struct sockaddr_in udpsend::cliaddr;
 
 int udpsend::init(void)
 {
-
+    printf("\n%s\n", CBuffer::m_RemoteIP.c_str());
     /* 建立udp socket */
     clifd = socket(AF_INET, SOCK_DGRAM, 0);
     if (clifd < 0)
@@ -35,7 +36,7 @@ int udpsend::init(void)
     socklen = sizeof(servaddr);
     memset(&servaddr, 0, socklen);
     servaddr.sin_family = AF_INET;
-    servaddr.sin_addr.s_addr = inet_addr(UDP_SERVR_IP);
+    servaddr.sin_addr.s_addr = inet_addr(CBuffer::m_RemoteIP.c_str());
     servaddr.sin_port = htons(UDP_SERVR_PORT);
 
     return 0;
