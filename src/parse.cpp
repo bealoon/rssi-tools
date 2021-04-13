@@ -125,7 +125,7 @@ bool CParse::parse_packet_auto(ONE_PACKET_DATA &des_packet, char in_bytes[])
     des_packet.chain_idx = hbuffer_index.chain_idx;
     des_packet.packet_idx = hbuffer_index.packet_cnt;
     idx += 7;
-    printf("finish! %d %d idx=%d bytes_subcarrier=%d\n", des_packet.chain_idx, des_packet.packet_idx, idx, bytes_subcarrier);
+    // printf("finish! chain_idx=%d is_chain_last=%d packet_idx=%d bytes_subcarrier=%d\n", des_packet.chain_idx, des_packet.is_chain_last, des_packet.packet_idx, bytes_subcarrier);
     return true;
 }
 #else

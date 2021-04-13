@@ -57,43 +57,100 @@ void *CIoFile::threadworker(void *arg)
             sleep(1);
             continue;
         }
-        // while (fin.read(read_buffer, 340))
-        // {
-        //     /* code */
-        // }
-        
-        fin.read(read_buffer, PACKET_LENGTH);
-        read_buffer_size = fin.gcount(); //看刚才读了多少字节
-        // cout << "read_buffer_size= " << read_buffer_size << endl; 
+
+        while (fin.read(read_buffer, PACKET_LENGTH))
+        {
+            read_buffer_size = fin.gcount(); //看刚才读了多少字节
+            // 未读取到文件 则
+            if (read_buffer_size == 0)
+            {
+                usleep(5);
+                continue;
+            }
+            packet_cnt ++;
+            uint64_t now_tstamp = CMyTools::get_timestamp_s();
+            if (last_tstamp == 0)
+            {
+                last_tstamp = now_tstamp;
+            }
+            if (now_tstamp - last_tstamp >= 10)
+            {
+                printf(" 10s 's number of packet[%d] is: %d\n", read_buffer_size, packet_cnt);
+                packet_cnt = 0;
+                last_tstamp = now_tstamp;
+            }
+            //集中处理操作
+            ONE_PACKET_DATA packet;
+            if(CParse::cut_streams(packet, read_buffer, read_buffer_size)){
+                // 攒包 解析 返回成功后
+                CBuffer::add_row(packet);
+            }
+            //等待5ms
+            usleep(2);
+        }
         //关闭文件
         fin.close();
-
-        // 未读取到文件 则
-        if (read_buffer_size == 0)
-        {
-            usleep(10);
-            continue;
-        }
-        
-        packet_cnt ++;
-        uint64_t now_tstamp = CMyTools::get_timestamp_s();
-        if (last_tstamp == 0)
-        {
-            last_tstamp = now_tstamp;
-        }
-        if (now_tstamp - last_tstamp >= 10)
-        {
-            printf(" 10s 's number of packet[%d] is: %d\n", read_buffer_size, packet_cnt);
-            packet_cnt = 0;
-            last_tstamp = now_tstamp;
-        }
-        //集中处理操作
-        ONE_PACKET_DATA packet;
-        if(CParse::cut_streams(packet, read_buffer, read_buffer_size)){
-            // 攒包 解析 返回成功后
-            CBuffer::add_row(packet);
-        }
-        //等待5ms
-        usleep(500);
     }
 }
+
+// //读取文件线程
+// void *CIoFile::threadworker(void *arg)
+// {
+//     char   read_buffer[512];//数据缓冲
+//     int    read_buffer_size = 0;
+//     while (is_working)
+//     {
+//         //读取io文件流
+//         ifstream fin(file_path, std::ios::binary);
+//         //判断如果失败情况
+//         if (fin.fail())
+//         {
+//             perror("read prop file failed!!!");
+//             fin.clear();
+//             fin.close();
+//             sleep(1);
+//             continue;
+//         }
+
+//         fin.read(read_buffer, PACKET_LENGTH);
+//         read_buffer_size = fin.gcount(); //看刚才读了多少字节
+//         // cout << "read_buffer_size= " << read_buffer_size << endl; 
+
+            // //获取文件的大小
+            // fin.seekg(0, fin.end);
+            // int length = fin.tellg();
+            // fin.seekg(0, fin.beg);
+            // printf("length= %d\n", length);
+
+//         //关闭文件
+//         fin.close();
+
+//         // 未读取到文件 则
+//         if (read_buffer_size == 0)
+//         {
+//             usleep(5);
+//             continue;
+//         }
+        
+//         packet_cnt ++;
+//         uint64_t now_tstamp = CMyTools::get_timestamp_s();
+//         if (last_tstamp == 0)
+//         {
+//             last_tstamp = now_tstamp;
+//         }
+//         if (now_tstamp - last_tstamp >= 10)
+//         {
+//             printf(" 10s 's number of packet[%d] is: %d\n", read_buffer_size, packet_cnt);
+//             packet_cnt = 0;
+//             last_tstamp = now_tstamp;
+//         }
+//         //集中处理操作
+//         ONE_PACKET_DATA packet;
+//         if(CParse::cut_streams(packet, read_buffer, read_buffer_size)){
+//             // 攒包 解析 返回成功后
+//             CBuffer::add_row(packet);
+//         }
+//         //等待5ms
+//         usleep(2);
+//     }
+// }

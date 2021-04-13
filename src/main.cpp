@@ -1,7 +1,7 @@
 /*
  * @Author: xiebibing
  * @since: 2019-09-28 09:36:01
- * @lastTime: 2021-04-03 12:12:31
+ * @lastTime: 2021-04-13 10:34:40
  * @LastAuthor: Do not edit
  * @message: rssi sensor demo
  */
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 {
     int ch;
     const char *format = "h:";
-    printf("Usage: %s [-h 保存结果文件]\n", argv[0]);
+    printf("Usage: %s [-h target IP Address]\n", argv[0]);
     while ((ch = getopt(argc, argv, format)) != -1)
     {
         switch(ch){
